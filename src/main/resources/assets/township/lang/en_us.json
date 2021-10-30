@@ -1,0 +1,11 @@
+{
+	"info.townships.located_in": "You are located in %s",
+	"info.townships.in_wilderness": "You are in the Wilderness",
+	"info.townships.create_town_success": "%s has successfully been established!",
+	"info.townships.delete_town_success": "%s fell to ruin!",
+
+	"error.townships.needs_name": "Your town needs a name!",
+	"error.townships.town_exists": "%s already exists!",
+	"error.townships.already_in_town": "You're already in a town!",
+	"error.townships.delete_town_failure": "%s doesn't exist"
+}

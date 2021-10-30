@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "townships",
+	"version": "${version}",
+	"name": "Townships",
+	"description": "",
+	"authors": [],
+	"contact": {},
+	"license": "MIT",
+	"icon": "assets/townships/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"dev.cammiescorner.townships.client.TownshipsClient"
+		],
+		"main": [
+			"dev.cammiescorner.townships.Townships"
+		],
+		"cardinal-components": [
+			"dev.cammiescorner.townships.core.registry.ModComponents"
+		]
+	},
+	"custom": {
+		"cardinal-components": [
+			"townships:township",
+			"townships:chunk"
+		]
+	},
+	"mixins": [
+		"townships.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.12.3",
+		"fabric": "*",
+		"minecraft": "1.17.1"
+	}
+}
