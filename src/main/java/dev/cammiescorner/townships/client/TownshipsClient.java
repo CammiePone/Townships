@@ -1,5 +1,6 @@
 package dev.cammiescorner.townships.client;
 
+import dev.cammiescorner.townships.common.packets.SendClaimToastPacket;
 import dev.cammiescorner.townships.common.packets.SyncTownshipPacket;
 import dev.cammiescorner.townships.core.util.ClientClaimData;
 import net.fabricmc.api.ClientModInitializer;
@@ -17,6 +18,7 @@ public class TownshipsClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		ClientPlayNetworking.registerGlobalReceiver(SendClaimToastPacket.ID, SendClaimToastPacket::handle);
 		ClientPlayNetworking.registerGlobalReceiver(SyncTownshipPacket.ID, SyncTownshipPacket::handle);
 	}
 }

@@ -48,10 +48,14 @@ public class ModCommands {
 
 									return Command.SINGLE_SUCCESS;
 								})))
-				.then(CommandManager.literal("leave")
+				.then(CommandManager.literal("claim")
 						.executes(context -> {
+							TownshipsUtil.addChunkToTownship(context.getSource().getPlayer(), context.getSource().getWorld());
 
-
+							return Command.SINGLE_SUCCESS;
+						}))
+				.then(CommandManager.literal("unclaim")
+						.executes(context -> {
 							return Command.SINGLE_SUCCESS;
 						})));
 	}

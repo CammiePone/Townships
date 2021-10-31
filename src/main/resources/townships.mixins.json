@@ -4,6 +4,8 @@
 	"package": "dev.cammiescorner.townships.core.mixin",
 	"compatibilityLevel": "JAVA_16",
 	"mixins": [
+		"ChunkTicketManagerMixin",
+		"PlayerEntityMixin"
 	],
 	"client": [
 	],
