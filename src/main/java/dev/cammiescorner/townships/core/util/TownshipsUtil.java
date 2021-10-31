@@ -68,14 +68,14 @@ public class TownshipsUtil {
 		return false;
 	}
 
-	public static boolean addChunkToTownship(PlayerEntity player, ServerWorld world) {
+	public static void addChunkToTownship(PlayerEntity player, ServerWorld world) {
 		TownshipComponent component = TownshipsApi.getTownshipComponent(world);
 		TownshipClaim claim = component.getTownForPlayer(player);
 		ChunkPos chunkPos = player.getChunkPos();
 
 		if(component.getTownForPlayer(player) == null) {
 			player.sendMessage(new TranslatableText("error." + Townships.MOD_ID + ".not_in_a_town", chunkPos).formatted(Formatting.RED), false);
-			return false;
+			return;
 		}
 
 		for(ChunkPos pos : claim.getChunkPoses()) {
@@ -84,12 +84,36 @@ public class TownshipsUtil {
 				((HasLastClaim) player).setLastClaim(claim);
 				SendClaimToastPacket.send((ServerPlayerEntity) player, new LiteralText(claim.getName()).formatted(Formatting.AQUA, Formatting.BOLD));
 				player.sendMessage(new TranslatableText("info." + Townships.MOD_ID + ".add_chunk_success", chunkPos).formatted(Formatting.GREEN), false);
-				return true;
+				return;
 			}
 		}
 
 		player.sendMessage(new TranslatableText("error." + Townships.MOD_ID + ".add_chunk_failure", chunkPos).formatted(Formatting.RED), false);
+	}
 
-		return false;
+	public static void removeChunkFromTownship(PlayerEntity player, ServerWorld world) {
+		TownshipComponent component = TownshipsApi.getTownshipComponent(world);
+		TownshipClaim claim = component.getTownForPlayer(player);
+		ChunkPos chunkPos = player.getChunkPos();
+
+		if(claim != null && claim.getChunkPoses().contains(chunkPos)) {
+			((HasLastClaim) player).setLastClaim(null);
+			SendClaimToastPacket.send((ServerPlayerEntity) player, new TranslatableText("info." + Townships.MOD_ID + ".wilderness").formatted(Formatting.GREEN, Formatting.BOLD));
+			claim.removeChunkPos(chunkPos);
+
+			if(claim.getChunkPoses().isEmpty()) {
+				player.sendMessage(new TranslatableText("info." + Townships.MOD_ID + ".delete_town_success", claim.getName()), false);
+				deleteTownship(claim.getName(), world);
+			}
+			else {
+				player.sendMessage(new TranslatableText("info." + Townships.MOD_ID + ".remove_chunk_success", chunkPos).formatted(Formatting.GREEN), false);
+			}
+		}
+		else if(claim == null) {
+			player.sendMessage(new TranslatableText("error." + Townships.MOD_ID + ".not_in_a_town", chunkPos).formatted(Formatting.RED), false);
+		}
+		else {
+			player.sendMessage(new TranslatableText("error." + Townships.MOD_ID + ".remove_chunk_failure", chunkPos).formatted(Formatting.RED), false);
+		}
 	}
 }

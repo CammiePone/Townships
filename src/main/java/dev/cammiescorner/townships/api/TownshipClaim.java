@@ -101,4 +101,8 @@ public class TownshipClaim {
 	public void addChunkPos(ChunkPos pos) {
 		chunkPoses.add(pos);
 	}
+
+	public void removeChunkPos(ChunkPos pos) {
+		chunkPoses.remove(pos);
+	}
 }

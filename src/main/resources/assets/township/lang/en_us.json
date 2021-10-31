@@ -3,7 +3,8 @@
 	"info.townships.in_wilderness": "You are in the Wilderness",
 	"info.townships.create_town_success": "%s has successfully been established!",
 	"info.townships.delete_town_success": "%s fell to ruin!",
-	"info.townships.add_chunk_success": "Claimed chunk %s!",
+	"info.townships.add_chunk_success": "Claimed chunk %s",
+	"info.townships.remove_chunk_success": "Unclaimed chunk %s",
 	"info.townships.wilderness": "The Wilderness",
 
 	"error.townships.needs_name": "Your town needs a name!",
@@ -12,5 +13,6 @@
 	"error.townships.already_in_town": "You're already in a town!",
 	"error.townships.not_in_a_town": "You're not in a town!",
 	"error.townships.delete_town_failure": "%s doesn't exist",
-	"error.townships.add_chunk_failure": "Chunk %s isn't connected to a border!"
+	"error.townships.add_chunk_failure": "Chunk %s isn't connected to a border!",
+	"error.townships.remove_chunk_failure": "Chunk %s isn't claimed by your town!"
 }

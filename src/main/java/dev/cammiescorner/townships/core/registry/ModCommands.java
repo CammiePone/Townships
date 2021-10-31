@@ -56,6 +56,8 @@ public class ModCommands {
 						}))
 				.then(CommandManager.literal("unclaim")
 						.executes(context -> {
+							TownshipsUtil.removeChunkFromTownship(context.getSource().getPlayer(), context.getSource().getWorld());
+
 							return Command.SINGLE_SUCCESS;
 						})));
 	}
