@@ -29,6 +29,8 @@ public class TownshipsUtil {
 			throw ModExceptions.TOWN_NEEDS_NAME.create();
 		if(name.length() > 20)
 			throw ModExceptions.TOWN_NAME_TOO_LONG.create(name.length(), 20);
+		if(component.getTownForChunk(owner.getChunkPos()) != null)
+			throw ModExceptions.TOWN_NAME_TOO_LONG.create(0, 20);
 		if(component.getClaims().entries().stream().anyMatch(entry -> entry.getValue().getName().equals(name)))
 			throw ModExceptions.TOWN_ALREADY_EXISTS.create(name);
 
@@ -78,14 +80,20 @@ public class TownshipsUtil {
 			return;
 		}
 
-		for(ChunkPos pos : claim.getChunkPoses()) {
-			if(pos.x + 1 == chunkPos.x || pos.x - 1 == chunkPos.x || pos.x + 1 == chunkPos.z || pos.z - 1 == chunkPos.z) {
-				claim.addChunkPos(chunkPos);
-				((HasLastClaim) player).setLastClaim(claim);
-				SendClaimToastPacket.send((ServerPlayerEntity) player, new LiteralText(claim.getName()).formatted(Formatting.AQUA, Formatting.BOLD));
-				player.sendMessage(new TranslatableText("info." + Townships.MOD_ID + ".add_chunk_success", chunkPos).formatted(Formatting.GREEN), false);
-				return;
+		if(component.getTownForChunk(player.getChunkPos()) == null) {
+			for(ChunkPos pos : claim.getChunkPoses()) {
+				if(pos.x + 1 == chunkPos.x || pos.x - 1 == chunkPos.x || pos.x + 1 == chunkPos.z || pos.z - 1 == chunkPos.z) {
+					claim.addChunkPos(chunkPos);
+					((HasLastClaim) player).setLastClaim(claim);
+					SendClaimToastPacket.send((ServerPlayerEntity) player, new LiteralText(claim.getName()).formatted(Formatting.AQUA, Formatting.BOLD));
+					player.sendMessage(new TranslatableText("info." + Townships.MOD_ID + ".add_chunk_success", chunkPos).formatted(Formatting.GREEN), false);
+					return;
+				}
 			}
+		}
+		else {
+			player.sendMessage(new TranslatableText("error." + Townships.MOD_ID + ".chunk_already_claimed", chunkPos).formatted(Formatting.RED), false);
+			return;
 		}
 
 		player.sendMessage(new TranslatableText("error." + Townships.MOD_ID + ".add_chunk_failure", chunkPos).formatted(Formatting.RED), false);

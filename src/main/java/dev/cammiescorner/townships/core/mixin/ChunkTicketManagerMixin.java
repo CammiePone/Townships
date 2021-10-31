@@ -24,9 +24,10 @@ public class ChunkTicketManagerMixin {
 		TownshipComponent component = TownshipsApi.getTownshipComponent(player.world);
 		TownshipClaim claim = component.getTownForChunk(player.getServerWorld().getChunk(player.getBlockPos()));
 		HasLastClaim entity = (HasLastClaim) player;
+		boolean isEnemy = component.getTownForPlayer(player) != null && claim != null && component.getTownForPlayer(player).getEnemyUuids().contains(claim.getUuid());
 
 		if(claim != null && entity.getLastClaim() != claim)
-			SendClaimToastPacket.send(player, new LiteralText(claim.getName()).formatted(Formatting.AQUA, Formatting.BOLD));
+			SendClaimToastPacket.send(player, new LiteralText(claim.getName()).formatted(isEnemy ? Formatting.RED : Formatting.AQUA, Formatting.BOLD));
 		else if(claim == null && entity.getLastClaim() != null)
 			SendClaimToastPacket.send(player, new TranslatableText("info." + Townships.MOD_ID + ".wilderness").formatted(Formatting.GREEN, Formatting.BOLD));
 
