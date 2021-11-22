@@ -6,7 +6,7 @@
 	"description": "",
 	"authors": [],
 	"contact": {},
-	"license": "MIT",
+	"license": "Custom License",
 	"icon": "assets/townships/icon.png",
 	"environment": "*",
 	"entrypoints": {
